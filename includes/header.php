@@ -1,6 +1,9 @@
 <?php
     date_default_timezone_set("Asia/Kolkata");
     require_once "connection.php";
+    require_once "common-functions.php";
+    $activePage = basename($_SERVER['PHP_SELF'], ".php");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,14 +40,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">AAU Library Register</a>
+            <a class="navbar-brand" href="index.php">AAU Library Register</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Active List</a></li>
-                <li><a href="#">Records</a></li>
+                <li class="<?= ($activePage == 'index') ? 'active':''; ?>"><a href="index.php">Active List</a></li>
+                <li class="<?= ($activePage == 'reports') ? 'active':''; ?>"><a href="reports.php">Records</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
