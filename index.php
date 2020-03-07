@@ -24,16 +24,15 @@
                     
                     <div class="form-group">
                         
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="type" id="input" value="student" required checked="checked">
-                                Student
-                            </label>
-                            <label>
-                                <input type="radio" name="type" id="input" value="employee" required>
-                                Employee
-                            </label>
-                        </div>
+                        
+                        <label for="type">Select User Type</label>
+                        
+                        <select name="type" id="type" class="form-control" required="required">
+                            <option value=""></option>
+                            <option value="student">Student</option>
+                            <option value="employee">Employee</option>
+                        </select>
+                        
                         
                     </div>
                     <div class="form-group">                        
@@ -41,13 +40,15 @@
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-barcode" aria-hidden="true"></span>
                             </div>
-                            
-                            <input type="text" class="form-control required" required id="barcode" placeholder="Scan Barcode">
+                            <input type="text" class="form-control required" required id="barcode" name="id_card_no" placeholder="Scan Barcode">
                         </div>
                         
                     </div>
                     <div class="form-group">
-                        <button type="button" class="btn btn-large btn-block btn-danger">Verify</button>
+                        <button type="button" id="verify" class="btn btn-large btn-block btn-danger">Verify</button>
+                    </div>
+                    <div class="form-group" id="ajax-load">
+
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -63,12 +64,25 @@
         console.log("adMore")
         var $modal = $("#add-more");
         $modal.find("select, input").val("");
-        $modal.find("input[type='checkbox'],input[type='radio']").prop({
-            "checked"   : false
-        });
+        // $modal.find("input[type='checkbox'],input[type='radio']").prop({
+        //     "checked"   : false
+        // });
         $modal.modal();
         $modal.find("#barcode").focus();
     }
+    $(document).ready(function(){
+        $("#verify").click(function() {
+            var data = $(this).parents("form").serialize();
+            var xhr = $.get("ajax-data.php",data);
+            xhr.fail(function(){
+                alert("Failed");
+            })
+            xhr.done(function(response) {
+                $("#ajax-load").html(response);
+                console.log(response);
+            });
+        });
+    });
 </script>
 <?php 
     require_once "includes/footer.php";

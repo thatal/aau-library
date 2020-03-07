@@ -58,7 +58,7 @@ require_once "includes/header.php";
     <div class="container">
         <h4>
         <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-         Reports</h4>
+         Library Register</h4>
         <?php
             include "includes/records.php";
         ?>
