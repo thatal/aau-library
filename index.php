@@ -20,7 +20,7 @@
             </div>
             
             <form action="" method="POST" role="form">
-                <div class="modal-body">
+                <div class="modal-body" id="modal-body">
                     
                     <div class="form-group">
                         
@@ -28,7 +28,7 @@
                         <label for="type">Select User Type</label>
                         
                         <select name="type" id="type" class="form-control" required="required">
-                            <option value=""></option>
+                            <option value="">--SELECT--</option>
                             <option value="student">Student</option>
                             <option value="employee">Employee</option>
                         </select>
@@ -52,7 +52,6 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </form>
         </div>
@@ -67,19 +66,24 @@
         // $modal.find("input[type='checkbox'],input[type='radio']").prop({
         //     "checked"   : false
         // });
+        $modal.find("#ajax-load").html("");
         $modal.modal();
         $modal.find("#barcode").focus();
     }
     $(document).ready(function(){
         $("#verify").click(function() {
+            $("#ajax-load").html("");
+            $("#modal-body").block({ message: '<h4>Please wait...</h4>', css: { border: '3px solid #a00' } });
             var data = $(this).parents("form").serialize();
             var xhr = $.get("ajax-data.php",data);
             xhr.fail(function(){
+                $("#modal-body").unblock();
                 alert("Failed");
             })
             xhr.done(function(response) {
                 $("#ajax-load").html(response);
                 console.log(response);
+                $("#modal-body").unblock();
             });
         });
     });

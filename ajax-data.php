@@ -2,6 +2,7 @@
     date_default_timezone_set("Asia/Kolkata");
     require_once "includes/common-functions.php";
     require_once "includes/connection.php";
+    sleep(1);
     if(!getFormValue("type")){
         die('<span class="text-danger">Please select a user type.</span>');
     }
@@ -14,13 +15,23 @@
         die('<span class="text-danger">Records not found.</span>');
     }
     $row = mysqli_fetch_assoc($query_run);
-    echo json_encode($row);
 ?>
 <div class="form-group">
     <label for="name">Name</label>
-    <input type="text" name="name" id="input\u\1" class="form-control" value="<?= $row["name"]?>" required="required">
+    <input type="text" name="name" id="name" class="form-control" value="<?= $row["name"]?>" required="required" readonly>
 </div>
-<div class="form-group">    
-    <label for="name">Name</label>    
-    <input type="text" name="name" id="input\u\1" class="form-control" value="<?= $row["name"]?>" required="required"> 
-</div>
+
+<?php if($row["type"] == "employee"):?>
+    <div class="form-group">    
+        <label for="designation">Designation</label>    
+        <input type="text" name="designation" id="designation" class="form-control" value="<?= $row["designation"]?>" readonly required="required"> 
+    </div>
+<?php else: ?>
+    <div class="form-group">    
+        <label for="roll_no">Roll No</label>    
+        <input type="text" name="roll_no" id="roll_no" class="form-control" value="<?= $row["roll_no"]?>" readonly required="required"> 
+    </div>
+<?php endif; ?>
+    <div class="form-group">    
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
