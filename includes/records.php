@@ -12,6 +12,7 @@
                 <tr>
                     <th>#</th>
                     <th>Name</th>
+                    <th>ID card no</th>
                     <th>Designation/Roll No</th>
                     <th>Type</th>
                     <th>Entry Time</th>
@@ -27,6 +28,7 @@
                 <tr>
                     <td><?= $counter;?></td>
                     <td><?= $row["name"] ?? "NA";?></td>
+                    <td><?= $row["id_card_no"] ?? "NA";?></td>
                     <td><?= $row["user_type"] == "student" ? $row["roll_no"] ?? "NA": $row["designation"] ?? "NA";?></td>
                     <td><?= ucwords($row["user_type"]);?></td>
                     <td><?= date("d/m/Y h:i a",strtotime($row["entry_date_time"]));?></td>
@@ -45,7 +47,7 @@
                     else:
                 ?>
                 <tr>
-                    <td colspan="6">
+                    <td colspan="7">
                         <h4 class="text-danger text-center">Sorry! No records found.</h4>
                     </td>
                 </tr>

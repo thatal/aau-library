@@ -1,6 +1,42 @@
 <?php
+require_once "includes/common-functions.php";
 require_once "includes/header.php";
-$query = "SELECT * FROM daily_records where exit_date_time is not null order by exit_date_time DESC";
+$where_condition = "";
+if(getFormValue("type")){
+    $where_condition .= " user_type = '".getFormValue('type')."'";
+}
+if (!getFormValue("date_from") && !getFormValue("date_to")) {
+    if ($where_condition != "") {
+        $where_condition .= " AND";
+    }
+    $date_default = date("Y-m-d", strtotime(date("Y-m-d") . " -1 week"));    
+    $where_condition .= " date(entry_date_time) >= '".$date_default."'";
+}
+
+if(getFormValue("date_from")){
+    if($where_condition != ""){
+        $where_condition .= " AND";
+    }
+    $where_condition .= " date(entry_date_time) >= '".getFormValue('date_from')."'";
+}
+if(getFormValue("id_card_no")){
+    if($where_condition != ""){
+        $where_condition .= " AND";
+    }
+    $where_condition .= " id_card_no LIKE '%".getFormValue('id_card_no')."%'";
+}
+if(getFormValue("date_to")){
+    if ($where_condition  != "") {
+        $where_condition .= " AND";
+    }
+    $where_condition .= " date(entry_date_time) <= '".getFormValue('date_to')."'";
+}
+
+if ($where_condition != "") {
+    $where_condition .= " AND";
+}
+
+$query = "SELECT * FROM daily_records WHERE {$where_condition} exit_date_time is not null order by exit_date_time DESC";
 
 ?>
 <div class="container-fluid">
@@ -12,6 +48,17 @@ $query = "SELECT * FROM daily_records where exit_date_time is not null order by 
 
         <form action="" method="GET" role="form">
             <div class="row">
+                <div class="col-md-3">
+                    
+                    <label for="type" class="control-label">
+                    <span class="glyphicon glyphicon-barcode" aria-hidden="true"></span>
+                     ID Card No</label>
+                    
+                    <input type="text" name="id_card_no" id="id_card_no" class="form-control" value="<?= getFormValue("id_card_no");?>" placeholder="ID CARD NO">
+                    
+                    
+                    
+                </div>
                 <div class="col-md-3">
                     
                     <label for="type" class="control-label">
@@ -32,7 +79,7 @@ $query = "SELECT * FROM daily_records where exit_date_time is not null order by 
                     <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
                      Entry Date From</label>
                     
-                    <input type="date" name="date_from" id="input_date_from" class="form-control" value="<?php echo (getFormValue("date_from"));?>" title="">
+                    <input type="date" name="date_from" id="input_date_from" class="form-control" value="<?php echo (getFormValue("date_from")? getFormValue("date_from") : $date_default);?>" title="">
                     
                 </div>
                 <div class="col-md-3">
