@@ -1,7 +1,22 @@
 <?php 
     require_once "includes/header.php";
 ?>
-
+<?php if(isset($_SESSION["error"])):?>
+    <div class="container">
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>Success!</strong> <?php echo $_SESSION["error"]; unset($_SESSION["error"]);?>
+        </div>
+    </div>    
+<?php endif;?>
+<?php if(isset($_SESSION["success"])):?>
+    <div class="container">
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>Success!</strong> <?php echo $_SESSION["success"]; unset($_SESSION["success"]);?>
+        </div>
+    </div>
+<?php endif;?>
 <div class="container">
     <h3>
     <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
@@ -19,7 +34,7 @@
                 <h4 class="modal-title">Add Student/Employee</h4>
             </div>
             
-            <form action="" method="POST" role="form">
+            <form action="add-record.php" method="POST" role="form">
                 <div class="modal-body" id="modal-body">
                     
                     <div class="form-group">
