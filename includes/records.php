@@ -35,7 +35,7 @@
                             if($row["exit_date_time"]){
                                 echo date("d/m/Y h:i a",strtotime($row["entry_date_time"]));
                             }else{
-                                echo '<button class="btn btn-primary btn-sm">Exit</button>';
+                                echo '<a href="exit-library.php?id='.$row["id"].'"><button class="btn btn-primary btn-sm">Exit</button></a>';
                             }
                         ?>
                     </td>
