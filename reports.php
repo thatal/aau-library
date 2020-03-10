@@ -1,5 +1,7 @@
 <?php
 require_once "includes/header.php";
+$query = "SELECT * FROM daily_records where exit_date_time is not null order by exit_date_time DESC";
+
 ?>
 <div class="container-fluid">
 

@@ -1,5 +1,6 @@
 <?php 
     require_once "includes/header.php";
+    $query = "SELECT * FROM daily_records where exit_date_time is null order by id DESC";
 ?>
 <?php if(isset($_SESSION["error"])):?>
     <div class="container">
